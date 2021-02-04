@@ -1,5 +1,5 @@
-##flask downloader
+## flask downloader
 
 
 direct download link:
-http://xckomorebi.tech/uploads/<filename>
+http://xckomorebi.tech/uploads/<path:filename>
