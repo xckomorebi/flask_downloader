@@ -8,7 +8,6 @@ app = Flask(__name__)
 app.config['UPLOAD_FOLDER'] = 'uploads'
 
 @app.route('/home')
-@app.route('/about')
 @app.route('/')
 def index():
    return render_template('home.html')
@@ -17,6 +16,10 @@ def index():
 def download(filename):
     uploads = os.path.join(app.root_path, app.config['UPLOAD_FOLDER'])
     return send_from_directory(directory=uploads, filename=filename, as_attachment=True)
+
+@app.route('/about')
+def about():
+    return render_template('about.html')
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=80)

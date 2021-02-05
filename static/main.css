@@ -116,3 +116,9 @@ a.article-title:hover {
   max-width: 20px;
   object-fit: cover;
 }
+
+.holder__logo img {
+  max-height: 110px;
+  max-width: 110px;
+  object-fit: cover;
+}
