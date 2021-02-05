@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+{% block content %}
+    <div class="padding__file">
+        <h1>files</h1>
+        <br>
+        <div class="filelist">
+            {% for file in filename_list %}
+                <a href='/uploads/{{ file }}'>{{ file }}</p>
+            {% endfor %}
+        </div>
+    </div>
+
+{% endblock content %}

@@ -12,6 +12,12 @@ app.config['UPLOAD_FOLDER'] = 'uploads'
 def index():
    return render_template('home.html')
 
+@app.route("/list_files")
+def list_files():
+    uploads = os.path.join(app.root_path, app.config['UPLOAD_FOLDER'])
+    filename_list = os.listdir(uploads)
+    return render_template('list_files.html', filename_list=filename_list)
+
 @app.route('/uploads/<path:filename>', methods=['GET', 'POST'])
 def download(filename):
     uploads = os.path.join(app.root_path, app.config['UPLOAD_FOLDER'])
