@@ -3,3 +3,4 @@ uploads
 nohup.out
 
 .DS_Store
+.vscode
