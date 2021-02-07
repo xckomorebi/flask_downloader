@@ -1,8 +1,11 @@
 #! /home/ubuntu/flask_downloader/venv/bin/python
 
-
-from flask import Flask, send_from_directory, render_template, url_for
 import os
+
+from flask import Flask, send_from_directory, render_template, request
+
+from utils.file_classifier import classify
+
 app = Flask(__name__)
 
 app.config['UPLOAD_FOLDER'] = 'uploads'
@@ -15,8 +18,14 @@ def index():
 @app.route("/list_files")
 def list_files():
     uploads = os.path.join(app.root_path, app.config['UPLOAD_FOLDER'])
-    filename_list = os.listdir(uploads)
-    return render_template('list_files.html', filename_list=filename_list)
+    _type = request.args.get("type")
+    if _type == "all":
+        files = {"files": os.listdir(uploads)}
+    elif _type in ['backing', 'tabs', 'preset']:
+        files = {"files": classify(uploads)[_type]}
+    else:
+        files = classify(uploads)
+    return render_template('list_files.html', files=files)
 
 @app.route('/uploads/<path:filename>', methods=['GET', 'POST'])
 def download(filename):
@@ -28,4 +37,4 @@ def about():
     return render_template('about.html')
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=80)
+    app.run(host='0.0.0.0', debug=1, port=80)

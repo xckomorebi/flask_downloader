@@ -1,12 +1,19 @@
 {% extends "base.html" %}
 {% block content %}
     <div class="padding__file">
-        <h1>files</h1>
+        <a href="/list_files"><h1>files</h1></a>
         <br>
         <div class="filelist">
-            {% for file in filename_list %}
-                <a href='/uploads/{{ file }}'>{{ file }}</p>
+            {% for key in files %}
+                {% if key != "files" %}
+                    <a href='/list_files?type={{ key }}'><h1 style="font-size: 125%;">{{ key }}</h1></a>
+                {% endif %}
+                    {% for file in files[key]%}
+                        <a href='/uploads/{{ file }}'> <p>{{ file }}</p></a>
+                    {% endfor %}
+                <br>
             {% endfor %}
+            <a href='/list_files?type=all'>
         </div>
     </div>
 
