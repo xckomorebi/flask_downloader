@@ -15,6 +15,18 @@ app.config['UPLOAD_FOLDER'] = 'uploads'
 def index():
    return render_template('home.html')
 
+
+@app.route('/about')
+def about():
+    return render_template('about.html')
+
+
+@app.route('/uploads/<path:filename>', methods=['GET', 'POST'])
+def download(filename):
+    uploads = os.path.join(app.root_path, app.config['UPLOAD_FOLDER'])
+    return send_from_directory(directory=uploads, filename=filename, as_attachment=True)
+
+
 @app.route("/list_files")
 def list_files():
     uploads = os.path.join(app.root_path, app.config['UPLOAD_FOLDER'])
@@ -27,14 +39,6 @@ def list_files():
         files = classify(uploads)
     return render_template('list_files.html', files=files)
 
-@app.route('/uploads/<path:filename>', methods=['GET', 'POST'])
-def download(filename):
-    uploads = os.path.join(app.root_path, app.config['UPLOAD_FOLDER'])
-    return send_from_directory(directory=uploads, filename=filename, as_attachment=True)
-
-@app.route('/about')
-def about():
-    return render_template('about.html')
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', debug=1, port=80)
